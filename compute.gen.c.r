@@ -12,7 +12,7 @@ function (x, path, rep = 1, float.type = "double")
     num.covariates <- nrow.weights[1] - 1
 
     act_fct_type <- attributes( net$act.fct )$type
-    if( act_fct_type == "logistic" )
+    if ( act_fct_type == "logistic" )
     {
         cat( "#include <math.h>\n\n", file = fd )
     }
