@@ -25,9 +25,9 @@ Test your network using compute.cpp:
 <pre>
 int main(int argc, char *argv[])
 {
-    float covariates[2] = { 5, 1 };
-    float results[1] = { 0 };
-    neuralnet::compute( &covariates[0], &results[0] );
+    double covariates[2] = { 5, 1 };
+    double results[1] = { 0 };
+    neuralnet::compute( &amp;covariates[0], &amp;results[0] );
     printf( "%f\n", results[0] ); // -0.080566
 }
 </pre>
