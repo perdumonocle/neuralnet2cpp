@@ -9,7 +9,6 @@ function (x, path, rep = 1, float.type = "double")
     nrow.weights <- sapply( weights, nrow )
     ncol.weights <- sapply( weights, ncol )
     length.weights <- length( weights )
-    print( length.weights )
     num.covariates <- nrow.weights[1] - 1
 
     act_fct_type <- attributes( net$act.fct )$type
