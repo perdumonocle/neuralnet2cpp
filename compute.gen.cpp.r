@@ -12,7 +12,7 @@ function (x, path, rep = 1, float.type = "double", namespace = TRUE)
     num.covariates <- nrow.weights[1] - 1
 
     act.fct.type <- attributes( net$act.fct )$type
-    if ( act.fct.type == "logistic" )
+    if ( act.fct.type == "logistic" || act.fct.type == "tanh" )
     {
         cat( "#include <math.h>\n", file = fd )
         cat( "\n", file = fd )
@@ -25,8 +25,10 @@ function (x, path, rep = 1, float.type = "double", namespace = TRUE)
         cat( "\n", file = fd )
     }
 
+    act.fct.cpp <- act.fct.type
     if ( act.fct.type == "logistic" )
     {
+        act.fct.cpp <- "act_fct"
         cat( "static ", float.type, " act_fct(", float.type, " x)\n", sep = "", file = fd )
         cat( "{\n", file = fd )
         cat( "    return 1 / ( 1 + exp(-x) );\n", file = fd )
@@ -52,10 +54,10 @@ function (x, path, rep = 1, float.type = "double", namespace = TRUE)
         layer.weights <- weights[[l]]
         layer.intercepts <- layer.weights[1,]
 
-        use.act.fct = "act_fct"
+        act.fct.use = act.fct.cpp
         if ( l == length.weights && linear.output )
         {
-            use.act.fct = ""
+            act.fct.use <- ""
         }
 
         for ( n in 1:(ncol.weights[l]) )
@@ -73,16 +75,16 @@ function (x, path, rep = 1, float.type = "double", namespace = TRUE)
             {
                 if ( n == ncol.weights[l] )
                 {
-                    cat( "    *results = ", use.act.fct, "( ", intercept, " + ", multsum, " );", sep = "", file = fd )
+                    cat( "    *results = ", act.fct.use, "( ", intercept, " + ", multsum, " );", sep = "", file = fd )
                 }
                 else
                 {
-                    cat( "    *(results++) = ", use.act.fct, "( ", intercept, " + ", multsum, " );\n", sep = "", file = fd )
+                    cat( "    *(results++) = ", act.fct.use, "( ", intercept, " + ", multsum, " );\n", sep = "", file = fd )
                 }
             }
             else
             {
-                cat( "    const ", float.type, " n", l, "_", (n - 1), " = ", use.act.fct, "( ", intercept, " + ", multsum, " );\n", sep = "", file = fd )
+                cat( "    const ", float.type, " n", l, "_", (n - 1), " = ", act.fct.use, "( ", intercept, " + ", multsum, " );\n", sep = "", file = fd )
             }
         }
         cat( "\n", file = fd )
