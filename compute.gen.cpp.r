@@ -11,7 +11,7 @@ function (x, path, rep = 1, float.type = "double", namespace = TRUE)
     length.weights <- length( weights )
     num.covariates <- nrow.weights[1] - 1
 
-    act.fct.type <- attributes( net$act.fct )$type
+    act.fct.type <- attributes( nn$act.fct )$type
     if ( act.fct.type == "logistic" || act.fct.type == "tanh" )
     {
         cat( "#include <math.h>\n", file = fd )
