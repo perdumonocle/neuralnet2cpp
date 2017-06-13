@@ -3,6 +3,7 @@
 
 You can train you neural network with R:
 <pre>
+&gt; library( 'neuralnet' )
 &gt; data &lt;- data.frame( i1 = c(1, 2, 4), i2 = c(5, 5, 6), o = c(1, 1, 0) )
 &gt; net &lt;- neuralnet( o~i1+i2, hidden = c( 5, 2 ) )
 </pre>
@@ -25,7 +26,7 @@ Test your network using compute.cpp:
 <pre>
 int main(int argc, char *argv[])
 {
-    double covariates[2] = { 5, 1 };
+    const double covariates[2] = { 5, 1 };
     double results[1] = { 0 };
     neuralnet::compute( &amp;covariates[0], &amp;results[0] );
     printf( "%f\n", results[0] ); // -0.080566
