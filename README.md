@@ -1,5 +1,5 @@
 # neuralnet2cpp
-Compute your R 'neuralnet' neural network using cpp code
+<strong>Compute your R 'neuralnet' neural network using cpp code.</strong>
 
 You can train you neural network with R:
 <pre>
@@ -18,7 +18,7 @@ Then test your net:
 
 And convert that network into cpp:
 <pre>
-> compute.gen.c( net, "~/myprojects/subfolder/compute.cpp" )
+> compute.gen.cpp( net, "~/myprojects/subfolder/compute.cpp" )
 </pre>
 
 Test your network using compute.cpp:
@@ -29,5 +29,6 @@ int main(int argc, char *argv[])
     double results[1] = { 0 };
     neuralnet::compute( &amp;covariates[0], &amp;results[0] );
     printf( "%f\n", results[0] ); // -0.080566
+    return 0;
 }
 </pre>
